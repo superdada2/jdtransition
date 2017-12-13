@@ -26,6 +26,7 @@ fs
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
+
 // db.invoice.belongsTo(db.class_enum, {
 //   foreignKey: 'class'
 // })
