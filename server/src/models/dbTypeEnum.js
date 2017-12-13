@@ -11,8 +11,9 @@ module.exports = function (sequelize, DataTypes) {
     data: {
       type: DataTypes.STRING(255),
       allowNull: false,
+      unique: true
     },
-    unique: true
+
   }, {
     tableName: 'dbTypeEnum'
   });

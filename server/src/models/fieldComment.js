@@ -21,7 +21,7 @@ module.exports = function (sequelize, DataTypes) {
       allowNull: false,
       unique: true
     },
-    user: {
+    userId: {
       type: DataTypes.INTEGER(11),
       allowNull: false,
       references: {

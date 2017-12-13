@@ -10,13 +10,13 @@ import {
 } from './models'
 import mysql from 'mysql';
 import passport from 'passport';
-import strategy from './Auth'
-import initialize from './initialize'
+
+
 
 
 
 const app = express();
-passport.use("auth", strategy)
+
 app.set("view engine", 'ejs')
   .set('views', __dirname + '/views')
   .use(expressPartils())
