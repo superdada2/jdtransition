@@ -1,0 +1,17 @@
+{
+  "presets": [
+    "es2015",
+    "stage-0"
+  ],
+  "plugins": [
+    "transform-promise-to-bluebird",
+    "syntax-async-functions",
+    "transform-regenerator",
+    "syntax-async-functions", [
+      "transform-runtime",
+      {
+        "polyfill": false
+      }
+    ]
+  ]
+}
