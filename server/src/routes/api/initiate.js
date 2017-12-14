@@ -17,7 +17,7 @@ export function loadData() {
     sheet: 1,
     omitEmptyFields: true
   }, (err, data) => {
-    data.forEach(async(i, index) => {
+    data.forEach((i, index) => {
       if (!_.isEmpty(i)) {
         table.create({
             name: i.Summary,
@@ -29,7 +29,7 @@ export function loadData() {
             })
           })
           .then(res => {
-            var tableId = res.dataValues.id
+            var tableId = res.dataValues.id - 1
             convertExcel.processFile('C:/Users/admin/data.xlsx', null, {
               sheet: index + 1,
               omitEmptyFields: true
@@ -62,23 +62,25 @@ export function loadData() {
                     })
                   })
                 }
-                field.create({
-                    tableId: tableId,
-                    name: j['Column Names in Datawarehouse'],
-                    jdeStatus: (_.has(j, 'Oracle Column Mapping') || _.has(j, 'Where Clause/Lookup Codes')) ? 2 : 1,
-                    oracleStatus: (_.has(j, 'JD Edwards Column Names') || _.has(j, 'JD Edwards Where Clause/Subquery/Lookup codes')) ? 2 : 1
-
-                  })
-                  .catch(err => {
-                    logger.error({
-                      err: err,
-                      name: name
+                if (!_.isEmpty(j)) {
+                  field.create({
+                      tableId: tableId,
+                      name: j['Column Names in Datawarehouse'],
+                      jdeStatus: (_.has(j, 'Oracle Column Mapping') || _.has(j, 'Where Clause/Lookup Codes')) ? 2 : 1,
+                      oracleStatus: (_.has(j, 'JD Edwards Column Names') || _.has(j, 'JD Edwards Where Clause/Subquery/Lookup codes')) ? 2 : 1
                     })
-                  })
-                  .then(res => {
-                    const fieldId = res.dataValues.id
-                    createTranslation(j, fieldId)
-                  })
+                    .catch(err => {
+                      logger.error({
+                        err: err,
+                        value: j,
+                        tableId: tableId
+                      })
+                    })
+                    .then(res => {
+                      const fieldId = res.dataValues.id
+                      createTranslation(j, fieldId - 1)
+                    })
+                }
               })
               // console.log(data2)
             })
@@ -103,7 +105,7 @@ function createTranslation(row, fieldId) {
     }).catch(err => {
       logger.error({
         err: err,
-        value: value
+        value: row['Oracle Column Mapping']
       })
     })
   }
@@ -117,7 +119,7 @@ function createTranslation(row, fieldId) {
     }).catch(err => {
       logger.error({
         err: err,
-        value: value
+        value: row['Where Clause/Lookup Codes']
       })
     })
   }
@@ -131,7 +133,7 @@ function createTranslation(row, fieldId) {
     }).catch(err => {
       logger.error({
         err: err,
-        value: value
+        value: row['JD Edwards Column Names']
       })
     })
   }
@@ -145,7 +147,7 @@ function createTranslation(row, fieldId) {
     }).catch(err => {
       logger.error({
         err: err,
-        value: value
+        value: row['JD Edwards Where Clause/Subquery/Lookup codes']
       })
     })
   }
