@@ -19,9 +19,17 @@ module.exports = function (sequelize, DataTypes) {
     name: {
       type: DataTypes.STRING(255),
       allowNull: false,
-      unique: true
+      unique: false
     },
-    status: {
+    jdeStatus: {
+      type: DataTypes.INTEGER(11),
+      allowNull: false,
+      references: {
+        model: 'statusEnum',
+        key: 'id'
+      }
+    },
+    oracleStatus: {
       type: DataTypes.INTEGER(11),
       allowNull: false,
       references: {

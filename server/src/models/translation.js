@@ -8,7 +8,7 @@ module.exports = function (sequelize, DataTypes) {
       primaryKey: true,
       autoIncrement: true
     },
-    translationId: {
+    fieldId: {
       type: DataTypes.INTEGER(11),
       allowNull: true,
       references: {
@@ -19,7 +19,7 @@ module.exports = function (sequelize, DataTypes) {
     value: {
       type: DataTypes.STRING(255),
       allowNull: false,
-      unique: true
+      unique: false
     },
     status: {
       type: DataTypes.INTEGER(11),
@@ -42,6 +42,18 @@ module.exports = function (sequelize, DataTypes) {
       allowNull: false,
       defaultValue: sequelize.fn('NOW')
     },
+    dbType: {
+      type: DataTypes.INTEGER(11),
+      allowNull: true,
+      references: {
+        model: 'dbTypeEnum',
+        key: 'id'
+      }
+    },
+    translationType: {
+      type: DataTypes.INTEGER(11),
+      allowNull: false,
+    }
   }, {
     tableName: 'translation'
   });

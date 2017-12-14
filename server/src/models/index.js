@@ -27,33 +27,44 @@ db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
 db.table.hasMany(db.tableComment, {
-  foreignKey: 'tableId'
+  foreignKey: 'tableId',
+  onDelete: 'cascade'
 })
 db.field.hasMany(db.fieldComment, {
-  foreignKey: 'fieldId'
+  foreignKey: 'fieldId',
+  onDelete: 'cascade'
 })
 db.translation.hasMany(db.translationComment, {
-  foreignKey: 'translationId'
+  foreignKey: 'translationId',
+  onDelete: 'cascade'
 })
 
 db.table.hasMany(db.field, {
-  foreignKey: 'tableId'
+  foreignKey: 'tableId',
+  onDelete: 'cascade'
 })
 db.field.hasMany(db.translation, {
-  foreignKey: 'translationId'
+  foreignKey: 'translationId',
+  onDelete: 'cascade'
 })
 db.field.belongsTo(db.user, {
   foreignKey: 'assignedTo'
 })
 db.field.belongsTo(db.statusEnum, {
-  foreignKey: 'status'
+  as: 'jdeStatusEnum',
+  foreignKey: 'jdeStatus'
+})
+db.field.belongsTo(db.statusEnum, {
+  foreignKey: 'oracleStatus',
+  as: 'oracleStatusEnum'
 })
 
 db.fieldComment.belongsTo(db.user, {
   foreignKey: 'userId'
 })
 db.fieldComment.hasMany(db.fieldComment, {
-  foreignKey: 'replyId'
+  foreignKey: 'replyId',
+  onDelete: 'cascade'
 })
 db.table.belongsTo(db.statusEnum, {
   foreignKey: 'status'
@@ -67,11 +78,16 @@ db.tableComment.belongsTo(db.user, {
   foreignKey: 'userId'
 })
 db.tableComment.hasMany(db.tableComment, {
-  foreignKey: 'replyId'
+  foreignKey: 'replyId',
+  onDelete: 'cascade'
 })
 
 db.translation.belongsTo(db.statusEnum, {
   foreignKey: 'status'
+})
+
+db.translation.belongsTo(db.dbTypeEnum, {
+  foreignKey: 'dbType'
 })
 
 db.translation.belongsTo(db.user, {
@@ -82,13 +98,25 @@ db.translationComment.belongsTo(db.user, {
   foreignKey: 'userId'
 })
 db.translationComment.hasMany(db.translationComment, {
-  foreignKey: 'replyId'
+  foreignKey: 'replyId',
+  onDelete: 'cascade'
+})
+db.table.hasMany(db.sourceTable, {
+  foreignKey: 'tableId',
+  onDelete: 'cascade'
+})
+db.sourceTable.belongsTo(db.statusEnum, {
+  foreignKey: 'status'
+})
+db.sourceTable.belongsTo(db.dbTypeEnum, {
+  foreignKey: 'dbType'
+})
+db.sourceTable.belongsTo(db.user, {
+  foreignKey: 'assignedTo'
 })
 
 
-// db.invoice.belongsTo(db.class_enum, {
-//   foreignKey: 'class'
-// })
+
 
 
 module.exports = db;

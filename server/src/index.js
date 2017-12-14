@@ -10,7 +10,9 @@ import {
 } from './models'
 import mysql from 'mysql';
 import passport from 'passport';
-
+import {
+  initiate
+} from './routes/api/initiate'
 
 
 
@@ -38,7 +40,7 @@ sequelize.sync()
   .then(() => {
 
     server.listen(port, function () {
-
+      initiate()
       console.log('Server listening at port %d', port);
     })
   })

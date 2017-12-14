@@ -1,6 +1,21 @@
 import express from 'express';
+import tableRouter from './table'
+import fieldRouter from './field'
+import translationRouter from './translation'
+import {
+  loadData
+} from './initiate'
 
 export const router = express.Router();
+
+router.use('/table', tableRouter)
+router.use('/field', fieldRouter)
+router.use('./translation', translationRouter)
+router.get('/load', async(req, res) => {
+
+  loadData()
+  res.status(500).json('test')
+})
 
 export default router;
 
