@@ -5,16 +5,26 @@ import SideBar from './containers/sidebar'
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import AppBar from './containers/appBar'
+import {Route, R} from 'react-router'
+import Summary from './containers/summaryContainer'
+import Table from './containers/tableContainer'
 
 class App extends Component {
-
-  render() {
+  componentDidMount() {
     injectTapEventPlugin()
+  }
+  render() {
     return (
       <MuiThemeProvider>
         <div className="App">
+
           <SideBar/>
           <AppBar/>
+          <div>
+            <Route exact path="/" component={Summary}/>
+            <Route path="/table/:id" component={Table}/>
+          </div>
+
         </div>
       </MuiThemeProvider>
     );

@@ -12,7 +12,7 @@ class SummaryContainer extends Component {
 
   render() {
     return (
-      <div>Table
+      <div>{this.props.match.params.id}
       </div>
     )
   }

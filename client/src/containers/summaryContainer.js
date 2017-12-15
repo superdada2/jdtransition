@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
+import {nav} from '../actions/navigate'
 
 class SummaryContainer extends Component {
   constructor(props) {
@@ -12,7 +13,7 @@ class SummaryContainer extends Component {
 
   render() {
     return (
-      <div>Sumamry
+      <div onClick={() => nav('/table/3')}>Sumamry
       </div>
     )
   }
