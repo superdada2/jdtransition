@@ -22,6 +22,7 @@ class App extends Component {
           <AppBar/>
           <div>
             <Route exact path="/" component={Summary}/>
+            <Route exact path="/summary" component={Summary}/>
             <Route path="/table/:id" component={Table}/>
           </div>
 

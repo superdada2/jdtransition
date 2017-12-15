@@ -6,6 +6,7 @@ import Drawer from 'material-ui/Drawer'
 import Menu from 'material-ui/Menu';
 import MenuItem from 'material-ui/MenuItem';
 import {toggleSidebar} from '../actions/uiActions'
+import {nav} from '../actions/navigate'
 
 class Sidebar extends Component {
   constructor(props) {
@@ -28,7 +29,14 @@ class Sidebar extends Component {
         .tableNames
         .map(i => {
           return (
-            <MenuItem key={i.id}>
+            <MenuItem
+              key={i.id}
+              onTouchTap={() => {
+              nav('/table/' + i.id),
+              this
+                .props
+                .toggleSideBar()
+            }}>
               {i.name}</MenuItem>
           )
         })
@@ -37,7 +45,13 @@ class Sidebar extends Component {
       )
 
       menuItems.unshift(
-        <MenuItem >Summary</MenuItem>
+        <MenuItem
+          onTouchTap={() => {
+          nav('/summary'),
+          this
+            .props
+            .toggleSideBar()
+        }}>Summary</MenuItem>
       )
     }
 
