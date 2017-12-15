@@ -1,17 +1,14 @@
-import {
-  table,
-  tableComments,
-  users,
-  statusEnum
-} from '../../../models'
+import {table, tableComments, user, statusEnum} from '../../../models'
 
-export function getTableNames() {
+export function getTables() {
   return table.findAll({
-    include: [{
-      model: user
-    }, {
-      model: statusEnum
-    }]
+    include: [
+      {
+        model: user
+      }, {
+        model: statusEnum
+      }
+    ]
   })
 }
 
@@ -22,10 +19,10 @@ export function getTableComments({
     where: {
       tableId: tableId
     },
-    include: [{
-        model: user
-      },
+    include: [
       {
+        model: user
+      }, {
         model: tableComments
       }
     ]

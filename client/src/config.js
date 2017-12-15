@@ -1,3 +1,3 @@
 export const settings = {
-  urlBase: 'http://localhost:3030/'
+  urlBase: 'http://localhost:4040/'
 }

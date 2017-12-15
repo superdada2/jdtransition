@@ -5,6 +5,7 @@ import {fetchTableNames} from '../actions/tableActions'
 import Drawer from 'material-ui/Drawer'
 import Menu from 'material-ui/Menu';
 import MenuItem from 'material-ui/MenuItem';
+import {toggleSidebar} from '../actions/uiActions'
 
 class Sidebar extends Component {
   constructor(props) {
@@ -13,22 +14,48 @@ class Sidebar extends Component {
       open: true
     }
   }
+  componentDidMount() {
+    if (!this.props.tableNameStatus) 
+      this.props.fetchTableNames()
+  }
   render() {
+    let menuItems = null
+    console.log(this.props.sideBarVisibility)
+    if (this.props.tableNameStatus) {
+
+      menuItems = this
+        .props
+        .tableNames
+        .map(i => {
+          return (
+            <MenuItem key={i.id}>
+              {i.name}</MenuItem>
+          )
+        })
+      menuItems.push(
+        <MenuItem onClick={this.props.toggleSideBar}>Close</MenuItem>
+      )
+
+      menuItems.unshift(
+        <MenuItem >Summary</MenuItem>
+      )
+    }
+
     return (
-      <Drawer open={this.state.open}>
-        <MenuItem>Menu Item</MenuItem>
-        <MenuItem>Menu Item 2</MenuItem>
+      <Drawer open={this.props.sideBarVisibility}>
+        {menuItems}
       </Drawer>
     )
   }
 }
 
 function mapStateToProsp(state) {
-  return {table: state.table};
+  return {sideBarVisibility: state.ui.sideBarVisibility, tableNames: state.table.tableNames, tableNameStatus: state.table.tableNameState};
 }
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
-    fetchTableNames: fetchTableNames
+    fetchTableNames: fetchTableNames,
+    toggleSideBar: toggleSidebar
   }, dispatch);
 }
 
