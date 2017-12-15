@@ -21,7 +21,6 @@ class Sidebar extends Component {
   }
   render() {
     let menuItems = null
-    console.log(this.props.sideBarVisibility)
     if (this.props.tableNameStatus) {
 
       menuItems = this
@@ -41,11 +40,12 @@ class Sidebar extends Component {
           )
         })
       menuItems.push(
-        <MenuItem onClick={this.props.toggleSideBar}>Close</MenuItem>
+        <MenuItem key={0} onClick={this.props.toggleSideBar}>Close</MenuItem>
       )
 
       menuItems.unshift(
         <MenuItem
+          key={-1}
           onTouchTap={() => {
           nav('/summary'),
           this

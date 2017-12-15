@@ -12,11 +12,10 @@ export const tableReducer = (state = initialState, action) => {
       newState.tableNameState = true
       newState.tableNames = action.payload.data;
       return newState;
-    case "FETCH_TABLE_NAMES_PENDING":
+    case "FETCH_TABLE_NAMES":
       newState.tableNameState = false
       return newState;
     default:
-      return newState;
       return state
   }
 };
