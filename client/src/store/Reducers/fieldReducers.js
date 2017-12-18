@@ -21,8 +21,10 @@ export const fieldReducer = (state = initialState, action) => {
       return newState;
     case "FETCH_FIELD_COMMENTS":
       newState.commentsState = false
+      return newState;
     case "FETCH_FIELD_COMMENTS_FULFILLED":
       newState.comments = action.payload.data;
+      return newState;
     default:
       return state
   }

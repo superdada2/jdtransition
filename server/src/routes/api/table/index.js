@@ -20,9 +20,8 @@ router.get('/getTables', async(req, res) => {
   }
 })
 
-router.get('/getTableComments', async(req, res) => {
+router.post('/getTableComments', async(req, res) => {
   try {
-
     const result = await getTableComments(req.body)
     res
       .status(200)

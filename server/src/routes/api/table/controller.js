@@ -1,4 +1,4 @@
-import {table, tableComments, user, statusEnum} from '../../../models'
+import {table, tableComment, user, statusEnum} from '../../../models'
 
 export function getTables() {
   return table.findAll({
@@ -15,7 +15,7 @@ export function getTables() {
 export function getTableComments({
   tableId = 0
 }) {
-  return tableComments.findAll({
+  return tableComment.findAll({
     where: {
       tableId: tableId
     },
@@ -23,8 +23,14 @@ export function getTableComments({
       {
         model: user
       }, {
-        model: tableComments
+        model: tableComment,
+        order: [
+          ['id', 'DESC']
+        ]
       }
+    ],
+    order: [
+      ['id', 'DESC']
     ]
   })
 }
@@ -36,5 +42,5 @@ export function saveComment({
   userId = 0,
   replyId = 0
 }) {
-  return tableComments.create({title: title, tableId: tableId, comment: comment, userId: userId, replyId: replyId})
+  return tableComment.create({title: title, tableId: tableId, comment: comment, userId: userId, replyId: replyId})
 }

@@ -12,9 +12,9 @@ export function fetchFields(tableId = 0) {
 }
 
 export function fetchFieldComments(fieldId = 0) {
-  const url = settings.urlBase + 'api/v1/table/getTableComments'
+  const url = settings.urlBase + 'api/v1/field/getFieldComment'
   return {
-    type: "FETCH_TABLE_COMMENTS",
+    type: "FETCH_FIELD_COMMENT",
     payload: axios.post(url, {fieldId: fieldId})
   }
 }

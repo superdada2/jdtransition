@@ -1,17 +1,25 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import React from 'react';
 import {Card, CardActions, CardHeader, CardText} from 'material-ui/Card';
 import FlatButton from 'material-ui/FlatButton';
+import RaisedButton from 'material-ui/RaisedButton';
+import Dialog from 'material-ui/Dialog';
+import CommentDialog from './commentDialog'
 
-//required props are this.props.fetchComments this.props.comments
+// required props are this.props.fetchComments this.props.comments,
+// this.props.saveComment
 export default class CommentContainer extends Component {
   constructor(props) {
     super(props)
     this.renderSubComments = this
       .renderSubComments
       .bind(this)
+    this.state = {
+      dialogVisibility: false,
+      isReply: false,
+      replyId: 0
+    }
 
   }
   componentDidMount() {
@@ -30,8 +38,8 @@ export default class CommentContainer extends Component {
       })
     var childComments = children.map(j => {
       return (
-        <Card>
-          <CardHeader subtitle={j.user.username + " at " + j.timeStamp}/>
+        <Card key={j.id}>
+          <CardHeader subtitle={j.user.username + " at " + j.timestamp}/>
           <CardText>
             {j.comment}
           </CardText>
@@ -40,17 +48,21 @@ export default class CommentContainer extends Component {
       )
     })
     return (
-      <Card>
+      <Card key={comment.id}>
         <CardHeader
           title={comment.title}
-          subtitle={comment.user.username + " at " + comment.timeStamp}/>
-        <CardActions>
-          <FlatButton label="Reply"/>
-        </CardActions>
+          subtitle={comment.user.username + " at " + comment.timestamp}/>
+
         <CardText>
           {comment.comment}
           <br/> {childComments}
+
         </CardText>
+        <CardActions><FlatButton
+          label="Reply"
+          onClick={() => {
+        this.setState({isReply: true, dialogVisibility: true, replyId: id})
+      }}/></CardActions>
       </Card>
     )
 
@@ -62,13 +74,28 @@ export default class CommentContainer extends Component {
       comments = this
         .props
         .comments
+        .filter(k => {
+          return k.replyId == null
+        })
         .map(i => {
           return (this.renderSubComments(i))
         })
     }
     return (
       <div>
-        <FlatButton labe="New Comment"/> {comments}
+        <RaisedButton
+          label="New Comment"
+          primary={true}
+          onClick={() => {
+          this.setState({isReply: false, dialogVisibility: true, replyId: null})
+        }}/>
+        <CommentDialog
+          isReply={this.state.isReply}
+          closeDialog={() => this.setState({dialogVisibility: false})}
+          dialogVisibility={this.state.dialogVisibility}
+          saveComment={(title, comment) => this.props.saveComment({title: title, comment: comment, replyId: this.state.replyId})}/>
+
+        <br/> {comments}
       </div>
     )
   }

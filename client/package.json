@@ -10,6 +10,7 @@
     "eslint-plugin-jsx-a11y": "^6.0.3",
     "eslint-plugin-react": "^7.5.1",
     "history": "^4.7.2",
+    "lodash": "^4.17.4",
     "material-ui": "^0.20.0",
     "material-ui-icons": "^1.0.0-beta.17",
     "react": "^16.2.0",
