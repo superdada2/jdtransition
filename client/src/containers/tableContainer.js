@@ -14,6 +14,7 @@ import {
 import RaisedButton from 'material-ui/RaisedButton';
 
 import CommentsComponent from '../components/comments'
+import {nav} from '../actions/navigate'
 
 class TableContainer extends Component {
   constructor(props) {
@@ -24,12 +25,15 @@ class TableContainer extends Component {
     this.fetchComments = this
       .fetchComments
       .bind(this)
+    this.onCellClick = this
+      .onCellClick
+      .bind(this)
   }
   componentDidMount() {
     this
       .props
       .fetchFields(this.props.match.params.id)
-    this.fetchComments()
+    this.fetchComments(this.props.match.params.id)
 
   }
 
@@ -40,6 +44,11 @@ class TableContainer extends Component {
         .fetchFields(newProp.match.params.id)
       this.fetchComments(newProp.match.params.id)
     }
+  }
+
+  onCellClick(row, column) {
+    console.log(row, column)
+    nav('/field/' + this.props.field.fields[row].id)
   }
 
   saveComment({
@@ -79,7 +88,7 @@ class TableContainer extends Component {
     }
 
     let tableBody = null
-    if (this.props.field.fieldStatus) {
+    if (this.props.field.fieldState) {
 
       tableBody = this
         .props
@@ -114,14 +123,10 @@ class TableContainer extends Component {
 
     return (
       <div>
-
-        <Table>
+        <h3>{tableName}</h3>
+        <Table onCellClick={this.onCellClick}>
           <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
-            <TableRow>
-              <TableHeaderColumn>
-                {"Table: " + tableName}
-              </TableHeaderColumn>
-            </TableRow>
+
             <TableRow>
 
               <TableHeaderColumn>Name</TableHeaderColumn>

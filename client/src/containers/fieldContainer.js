@@ -1,157 +1,89 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import {fetchFields, fetchFieldComments} from '../actions/fieldActions'
-import {fetchTableComments, saveComment} from '../actions/tableActions'
-import {
-  Table,
-  TableBody,
-  TableHeader,
-  TableHeaderColumn,
-  TableRow,
-  TableRowColumn
-} from 'material-ui/Table';
-import RaisedButton from 'material-ui/RaisedButton';
-
+import {fetchTranslations, fetchTranslationComments, saveComment} from '../actions/translationActions'
 import CommentsComponent from '../components/comments'
+import {fetchFieldById} from '../actions/fieldActions';
+import TranslationComponent from '../components/translation'
+import _ from 'lodash'
 
-class TableContainer extends Component {
+class FieldContainer extends Component {
   constructor(props) {
     super(props)
-    this.saveComment = this
-      .saveComment
+    this.saveComments = this
+      .saveComments
       .bind(this)
-    this.fetchComments = this
-      .fetchComments
-      .bind(this)
+    this.fet
   }
   componentDidMount() {
     this
       .props
-      .fetchFields(this.props.match.params.id)
-    this.fetchComments()
-
+      .fetchFieldById(this.props.match.params.id)
+    this
+      .props
+      .fetchTranslations(this.props.match.params.id)
   }
-
   componentWillReceiveProps(newProp) {
     if (this.props.match.params.id != newProp.match.params.id) {
       this
         .props
-        .fetchFields(newProp.match.params.id)
-      this.fetchComments(newProp.match.params.id)
+        .fetchFieldById(this.props.match.params.id)
+      this
+        .props
+        .fetchTranslations(this.props.match.params.id)
     }
   }
 
-  saveComment({
-    title = "",
-    comment = "",
-    replyId = null
-  }) {
+  saveComments(comment) {
     this
       .props
-      .saveTableComment({title: title, tableId: this.props.match.params.id, comment: comment, userId: 1, replyId: replyId})
+      .saveTranslationComment(comment)
       .then(i => {
-        this.fetchComments(this.props.match.params.id)
+        this
+          .props
+          .fetchTranslations(this.props.match.params.id)
       })
-  }
-  fetchComments(tableId) {
-    console.log("fetching", this.props.match.params.id)
-    this
-      .props
-      .fetchTableComments(tableId)
   }
 
   render() {
-
-    let tableName = null
-    if (this.props.tables.tableNameState) {
-
-      tableName = this
-        .props
-        .tables
-        .tableNames
-        .find(i => {
-          return i.id == this.props.field.tableId
-        })
-      tableName = tableName == undefined
-        ? null
-        : tableName.name
+    let title = null
+    let translations = null
+    if (!_.isEmpty(this.props.field.field)) {
+      title = this.props.field.field.name
     }
-
-    let tableBody = null
-    if (this.props.field.fieldStatus) {
-
-      tableBody = this
+    if (this.props.translation.translationsState) {
+      translations = this
         .props
-        .field
-        .fields
+        .translation
+        .translations
+        .filter(i => {
+          return i.dbType === 1
+        })
         .map(i => {
-          return (
-            <TableRow key={i.id}>
-
-              <TableRowColumn>{i.name}</TableRowColumn>
-              <TableRowColumn>{i.oracleStatusEnum.data}</TableRowColumn>
-              <TableRowColumn>{i.assignedTo
-                  ? null
-                  : null}</TableRowColumn>
-              <TableRowColumn>{i
-                  .translations
-                  .find(j => {
-                    return j.dbType == 1
-                  }) != undefined
-                  ? i
-                    .translations
-                    .find(j => {
-                      return j.dbType == 1
-                    })
-                    .value
-                  : null
-}</TableRowColumn>
-            </TableRow>
-          )
+          return (<TranslationComponent
+            key={i.id}
+            translation={i}
+            saveComment={this.saveComments}/>)
         })
     }
 
     return (
       <div>
-
-        <Table>
-          <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
-            <TableRow>
-              <TableHeaderColumn>
-                {"Table: " + tableName}
-              </TableHeaderColumn>
-            </TableRow>
-            <TableRow>
-
-              <TableHeaderColumn>Name</TableHeaderColumn>
-              <TableHeaderColumn>Status</TableHeaderColumn>
-              <TableHeaderColumn>AssignedTo</TableHeaderColumn>
-              <TableHeaderColumn>Translation</TableHeaderColumn>
-            </TableRow>
-          </TableHeader>
-          <TableBody displayRowCheckbox={false}>
-            {tableBody}
-          </TableBody>
-        </Table>
-
-        <CommentsComponent
-          fetchComments={this.fetchComments}
-          comments={this.props.tableComments}
-          saveComment={this.saveComment}/>
+        <h3>{title}</h3>
+        {translations}
       </div>
     )
   }
 }
 function mapStateToProsp(state) {
-  return {field: state.field, tables: state.table, tableComments: state.table.comments, commentsState: state.table.commentsState};
+  return {field: state.field, translation: state.translation};
 }
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
-    fetchFields: fetchFields,
-    fetchTableComments: fetchTableComments,
-    saveTableComment: saveComment
+    fetchTranslations: fetchTranslations,
+    fetchFieldById: fetchFieldById,
+    saveTranslationComment: saveComment
   }, dispatch);
 }
 
-export default connect(mapStateToProsp, mapDispatchToProps)(TableContainer);
+export default connect(mapStateToProsp, mapDispatchToProps)(FieldContainer);

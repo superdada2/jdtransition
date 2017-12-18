@@ -18,3 +18,11 @@ export function fetchFieldComments(fieldId = 0) {
     payload: axios.post(url, {fieldId: fieldId})
   }
 }
+
+export function fetchFieldById(fieldId = 0) {
+  const url = settings.urlBase + 'api/v1/field/getFieldById'
+  return {
+    type: "FETCH_FIELD",
+    payload: axios.post(url, {fieldId: fieldId})
+  }
+}

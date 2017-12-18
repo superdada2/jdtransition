@@ -8,6 +8,7 @@ import AppBar from './containers/appBar'
 import {Route, R} from 'react-router'
 import Summary from './containers/summaryContainer'
 import Table from './containers/tableContainer'
+import Field from './containers/fieldContainer'
 
 class App extends Component {
   componentDidMount() {
@@ -24,6 +25,7 @@ class App extends Component {
             <Route exact path="/" component={Summary}/>
             <Route exact path="/summary" component={Summary}/>
             <Route path="/table/:id" component={Table}/>
+            <Route path="/field/:id" component={Field}/>
           </div>
 
         </div>

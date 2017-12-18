@@ -43,24 +43,23 @@ class Summary extends Component {
         })
     }
     return (
-      <Table>
-        <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
-          <TableRow>
-            <TableHeaderColumn>
-              Summary
-            </TableHeaderColumn>
-          </TableRow>
-          <TableRow>
-            <TableHeaderColumn>ID</TableHeaderColumn>
-            <TableHeaderColumn>Name</TableHeaderColumn>
-            <TableHeaderColumn>Status</TableHeaderColumn>
-            <TableHeaderColumn>AssignedTo</TableHeaderColumn>
-          </TableRow>
-        </TableHeader>
-        <TableBody displayRowCheckbox={false}>
-          {summaryTable}
-        </TableBody>
-      </Table>
+      <div>
+        <h3>Summary</h3>
+        <Table>
+          <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
+
+            <TableRow>
+              <TableHeaderColumn>ID</TableHeaderColumn>
+              <TableHeaderColumn>Name</TableHeaderColumn>
+              <TableHeaderColumn>Status</TableHeaderColumn>
+              <TableHeaderColumn>AssignedTo</TableHeaderColumn>
+            </TableRow>
+          </TableHeader>
+          <TableBody displayRowCheckbox={false}>
+            {summaryTable}
+          </TableBody>
+        </Table>
+      </div>
     )
   }
 }

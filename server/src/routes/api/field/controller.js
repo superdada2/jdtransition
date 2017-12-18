@@ -8,6 +8,16 @@ import {
   fieldComment
 } from '../../../models'
 
+export function getFieldById({
+  fieldId = 0
+}) {
+  return field.findOne({
+    where: {
+      id: fieldId
+    }
+  })
+}
+
 export function getFieldByTableId({
   tableId = 0
 }) {

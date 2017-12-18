@@ -1,6 +1,5 @@
 import React, {Component} from 'react'
-import {connect} from 'react-redux';
-import {bindActionCreators} from 'redux';
+
 import {Card, CardActions, CardHeader, CardText} from 'material-ui/Card';
 import FlatButton from 'material-ui/FlatButton';
 import RaisedButton from 'material-ui/RaisedButton';

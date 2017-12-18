@@ -2,9 +2,11 @@ import {
   field,
   translation,
   translationComment,
-  users,
+  user,
   statusEnum,
-  sourceTable
+  sourceTable,
+  dbTypeEnum,
+  assignedTo
 } from '../../../models'
 
 export function getTranslationByFieldId({
@@ -16,10 +18,19 @@ export function getTranslationByFieldId({
     },
     include: [
       {
-        model: 'translationComment',
+        model: translationComment,
+        include: [
+          {
+            model: user
+          }, {
+            model: translationComment
+          }
+        ],
         order: [
-          ['timestamp', 'DESC']
+          ['id', 'DESC']
         ]
+      }, {
+        model: statusEnum
       }
     ]
   })
@@ -32,7 +43,7 @@ export function saveComment({
   userId = 0,
   replyId = 0
 }) {
-  return translation.create({title: title, translationId: translationId, comment: comment, userId: userId, replyId: replyId})
+  return translationComment.create({title: title, translationId: translationId, comment: comment, userId: userId, replyId: replyId})
 }
 
 export function getSourceTables({
@@ -44,9 +55,9 @@ export function getSourceTables({
     },
     include: [
       {
-        model: 'dbTypeEnum'
+        model: dbTypeEnum
       }, {
-        model: 'assignedTo'
+        model: assignedTo
       }
     ]
   })
