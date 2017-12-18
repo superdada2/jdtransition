@@ -9,3 +9,11 @@ export function fetchTableNames() {
     payload: axios.get(url)
   }
 }
+
+export function fetchTableComments(tableId = 0) {
+  const url = settings.urlBase + 'api/v1/table/getTableComments'
+  return {
+    type: "FETCH_TABLE_COMMENTS",
+    payload: axios.post(url, {tableId: tableId})
+  }
+}

@@ -28,3 +28,13 @@ export function getTableComments({
     ]
   })
 }
+
+export function saveComment({
+  title = "",
+  tableId = 0,
+  comment = "",
+  userId = 0,
+  replyId = 0
+}) {
+  return tableComments.create({title: title, tableId: tableId, comment: comment, userId: userId, replyId: replyId})
+}

@@ -1,22 +1,53 @@
 import express from 'express';
-import {
-  getTranslationByFieldId
-} from './controller'
+import {getTranslationByFieldId, saveComment, getSourceTables} from './controller'
 export const router = express.Router();
 
 export default router;
+
+router.post('/getSourceTables', async(req, res) => {
+  try {
+
+    const result = await getSourceTables(req.body)
+    res
+      .status(200)
+      .json(result)
+  } catch (err) {
+    const message = err.message
+    console.log("error", message)
+    res
+      .status(500)
+      .json({status: false, message})
+  }
+})
 
 router.post('/getTranslationByFieldId', async(req, res) => {
   try {
 
     const result = await getTranslationByFieldId(req.body)
-    res.status(200).json(result)
+    res
+      .status(200)
+      .json(result)
   } catch (err) {
     const message = err.message
     console.log("error", message)
-    res.status(500).json({
-      status: false,
-      message
-    })
+    res
+      .status(500)
+      .json({status: false, message})
+  }
+})
+
+router.post('/saveComment', async(req, res) => {
+  try {
+
+    const result = await saveComment(req.body)
+    res
+      .status(200)
+      .json(result)
+  } catch (err) {
+    const message = err.message
+    console.log("error", message)
+    res
+      .status(500)
+      .json({status: false, message})
   }
 })

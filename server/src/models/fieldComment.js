@@ -8,6 +8,11 @@ module.exports = function (sequelize, DataTypes) {
       primaryKey: true,
       autoIncrement: true
     },
+    title: {
+      type: DataTypes.STRING(255),
+      allowNull: false,
+      unique: false
+    },
     fieldId: {
       type: DataTypes.INTEGER(11),
       allowNull: true,
@@ -19,7 +24,7 @@ module.exports = function (sequelize, DataTypes) {
     comment: {
       type: DataTypes.STRING(255),
       allowNull: false,
-      unique: true
+      unique: false
     },
     userId: {
       type: DataTypes.INTEGER(11),
@@ -42,7 +47,5 @@ module.exports = function (sequelize, DataTypes) {
         key: 'id'
       }
     }
-  }, {
-    tableName: 'fieldComment'
-  });
+  }, {tableName: 'fieldComment'});
 };

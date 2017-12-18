@@ -16,10 +16,15 @@ module.exports = function (sequelize, DataTypes) {
         key: 'id'
       }
     },
+    title: {
+      type: DataTypes.STRING(255),
+      allowNull: false,
+      unique: false
+    },
     comment: {
       type: DataTypes.STRING(255),
       allowNull: false,
-      unique: true
+      unique: false
     },
     userId: {
       type: DataTypes.INTEGER(11),
@@ -42,7 +47,5 @@ module.exports = function (sequelize, DataTypes) {
         key: 'id'
       }
     }
-  }, {
-    tableName: 'tableComment'
-  });
+  }, {tableName: 'tableComment'});
 };

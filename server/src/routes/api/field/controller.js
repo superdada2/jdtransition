@@ -1,4 +1,12 @@
-import {field, translation, translationComment, users, statusEnum} from '../../../models'
+import {
+  field,
+  translation,
+  translationComment,
+  users,
+  statusEnum,
+  tableComment,
+  fieldComment
+} from '../../../models'
 
 export function getFieldByTableId({
   tableId = 0
@@ -22,6 +30,33 @@ export function getFieldByTableId({
 
         model: statusEnum,
         as: 'oracleStatusEnum'
+      }
+    ]
+  })
+}
+
+export function saveComment({
+  title = "",
+  fieldId = 0,
+  comment = "",
+  userId = 0,
+  replyId = 0
+}) {
+  return fieldComment.create({title: title, fieldId: fieldId, comment: comment, userId: userId, replyId: replyId})
+}
+
+export function getFieldComments({
+  fieldId = 0
+}) {
+  return tableComments.findAll({
+    where: {
+      fieldId: fieldId
+    },
+    include: [
+      {
+        model: user
+      }, {
+        model: fieldComment
       }
     ]
   })
