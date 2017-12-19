@@ -118,6 +118,7 @@ export async function initiate() {
 
     await statusEnum.bulkCreate(status)
     await dbTypeEnum.bulkCreate(dbType)
+    await user.create({username: 'unassigned'})
     await user.create({username: 'admin'})
   } catch (err) {
     // console.log(err)

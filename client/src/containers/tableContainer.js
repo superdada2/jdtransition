@@ -12,7 +12,7 @@ import {
   TableRowColumn
 } from 'material-ui/Table';
 import RaisedButton from 'material-ui/RaisedButton';
-
+import _ from 'lodash'
 import CommentsComponent from '../components/comments'
 import {nav} from '../actions/navigate'
 
@@ -108,12 +108,9 @@ class TableContainer extends Component {
                   .find(j => {
                     return j.dbType == 1
                   }) != undefined
-                  ? i
-                    .translations
-                    .find(j => {
-                      return j.dbType == 1
-                    })
-                    .value
+                  ? _.findLast(i.translations, (j) => {
+                    return j.dbType == 1
+                  }).value
                   : null
 }</TableRowColumn>
             </TableRow>

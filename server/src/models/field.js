@@ -39,13 +39,12 @@ module.exports = function (sequelize, DataTypes) {
     },
     assignedTo: {
       type: DataTypes.INTEGER(11),
-      allowNull: true,
+      allowNull: false,
+      defaultValue: '1',
       references: {
         model: 'user',
         key: 'id'
       }
     }
-  }, {
-    tableName: 'field'
-  });
+  }, {tableName: 'field'});
 };

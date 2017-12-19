@@ -23,14 +23,13 @@ module.exports = function (sequelize, DataTypes) {
     },
     assignedTo: {
       type: DataTypes.INTEGER(11),
-      allowNull: true,
+
+      defaultValue: '1',
+      allowNull: false,
       references: {
         model: 'user',
         key: 'id'
       }
-    },
-
-  }, {
-    tableName: 'table'
-  });
+    }
+  }, {tableName: 'table'});
 };
