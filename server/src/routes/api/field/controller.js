@@ -2,11 +2,12 @@ import {
   field,
   translation,
   translationComment,
-  users,
+  user,
   statusEnum,
   tableComment,
   fieldComment
 } from '../../../models'
+import Promise from 'bluebird'
 
 export function getFieldById({
   fieldId = 0
@@ -31,6 +32,11 @@ export function getFieldByTableId({
         model: translation,
         order: [
           ['timestamp', 'DESC']
+        ],
+        include: [
+          {
+            model: user
+          }
         ]
       }, {
 
@@ -70,4 +76,24 @@ export function getFieldComments({
       }
     ]
   })
+}
+
+export function changeAssigned({
+  fieldId = 1,
+  userId = 1
+}) {
+  return new Promise((res, rej) => {
+    field.update({
+      assignedTo: userId
+    }, {
+      where: {
+        id: fieldId
+      }
+    }).then(i => {
+      res({fieldId: fieldId, userId: userId})
+    }).catch(err => {
+      rej(err)
+    })
+  })
+
 }

@@ -15,28 +15,32 @@ export default class UserDropdown extends Component {
       .bind(this)
   }
   onChange(e, key, value) {
+    this.setState({defaultUser: value})
     this
       .props
-      .onChange(key)
+      .onChange(value)
   }
   componentWillReceiveProps(newProp) {
     if (this.props.users.length !== newProp.users.length) {
       this.setState({users: newProp.users})
     }
-    if (newProp.defaultUser !== this.props.defaultUser) {
+    if (newProp.defaultUser !== this.state.defaultUser) {
       this.setState({defaultUser: newProp.defaultUser})
     }
   }
 
   render() {
     let menuItem = this
-      .state
+      .props
       .users
       .map(i => {
         return (<MenuItem key ={i.id} value={i.id} primaryText={i.username}/>)
       })
     return (
-      <DropDownMenu value={this.state.defaultUser} onChange={this.onChange}>
+      <DropDownMenu
+        value={this.props.defaultUser}
+        onClick={(e) => e.stopPropagation()}
+        onChange={this.onChange}>
         {menuItem}
       </DropDownMenu>
     )

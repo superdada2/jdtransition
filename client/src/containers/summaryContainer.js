@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import {fetchTableNames} from '../actions/tableActions'
+import {fetchTableNames, changeAssigned} from '../actions/tableActions'
 import {
   Table,
   TableBody,
@@ -10,6 +10,8 @@ import {
   TableRow,
   TableRowColumn
 } from 'material-ui/Table';
+
+import UserDropdown from '../components/userDropdown'
 
 class Summary extends Component {
   constructor(props) {
@@ -34,9 +36,19 @@ class Summary extends Component {
               <TableRowColumn>{i.id}</TableRowColumn>
               <TableRowColumn>{i.name}</TableRowColumn>
               <TableRowColumn>{i.statusEnum.data}</TableRowColumn>
-              <TableRowColumn>{i.user
-                  ? null
-                  : null}</TableRowColumn>
+              <TableRowColumn>{< UserDropdown defaultUser = {
+                  i.assignedTo
+                }
+                users = {
+                  this.props.ui.users
+                }
+                onChange = {
+                  (value) => {
+                    this
+                      .props
+                      .changeAssigned(value, i.id)
+                  }
+                } />}</TableRowColumn>
 
             </TableRow>
           )
@@ -65,11 +77,12 @@ class Summary extends Component {
 }
 
 function mapStateToProsp(state) {
-  return {tables: state.table.tableNames, tableStatus: state.table.tableNameState};
+  return {ui: state.ui, tables: state.table.tableNames, tableStatus: state.table.tableNameState};
 }
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
-    fetchTables: fetchTableNames
+    fetchTables: fetchTableNames,
+    changeAssigned: changeAssigned
   }, dispatch);
 }
 

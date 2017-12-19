@@ -78,7 +78,8 @@ class FieldContainer extends Component {
             key={i.id}
             translation={i}
             saveComment={this.saveComments}
-            addTranslation={this.props.addTranslation}/>)
+            addTranslation={this.props.addTranslation}
+            users={this.props.users}/>)
         })
     }
 
@@ -91,7 +92,7 @@ class FieldContainer extends Component {
   }
 }
 function mapStateToProsp(state) {
-  return {field: state.field, translation: state.translation};
+  return {field: state.field, translation: state.translation, users: state.ui.users};
 }
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({

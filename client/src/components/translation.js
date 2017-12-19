@@ -44,7 +44,7 @@ export default class Translation extends Component {
             <TableRow>
               <TableRowColumn>{this.props.translation.value}</TableRowColumn>
               <TableRowColumn>{this.props.translation.statusEnum.data}</TableRowColumn>
-              <TableRowColumn>{this.props.translation.assignedTo}</TableRowColumn>
+              <TableRowColumn>{this.props.translation.user.username}</TableRowColumn>
               <TableRowColumn>{this.props.translation.timestamp}</TableRowColumn>
             </TableRow>
           </TableBody>

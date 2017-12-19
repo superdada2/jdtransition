@@ -36,3 +36,19 @@ export function saveComment(comment) {
     payload: axios.post(url, comment)
   }
 }
+
+export function changeAssigned(userId = 0, tableId = 1) {
+  const url = settings.urlBase + 'api/v1/table/changeAssigned'
+  return {
+    type: "CHANGED_ASSIGNED_USER",
+    package: {
+      userId: userId,
+      tableId: tableId
+    },
+    payload: axios.post(url, {
+      tableId: tableId,
+      userId: userId
+    },)
+  }
+
+}

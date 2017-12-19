@@ -1,3 +1,5 @@
+import Promise from 'bluebird'
+
 import {
   field,
   translation,
@@ -48,6 +50,8 @@ export function getTranslationByFieldId({
         ]
       }, {
         model: statusEnum
+      }, {
+        model: user
       }
     ],
     order: [
@@ -80,5 +84,27 @@ export function getSourceTables({
         model: assignedTo
       }
     ]
+  })
+}
+
+export function changeStatus({
+  translationId = 0,
+  status = 0
+}) {
+  return new Promise((res, rej) => {
+    translation.update({
+      status: status
+    }, {
+        where: {
+          id: translationId
+        }
+      })
+      .then(i => {
+      if (status ===) 
+      }
+    )
+      .catch(err => {
+        rej(err)
+      })
   })
 }

@@ -104,6 +104,12 @@ export async function initiate() {
       data: 'confirmed'
     }, {
       data: 'complete'
+    }, {
+      data: 'proposed'
+    }, {
+      data: 'rejected'
+    }, {
+      data: 'partial'
     }
   ]
 

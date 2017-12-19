@@ -26,3 +26,20 @@ export function fetchFieldById(fieldId = 0) {
     payload: axios.post(url, {fieldId: fieldId})
   }
 }
+
+export function changeAssigned(userId = 0, fieldId = 1) {
+  console.log("changing assigned", userId, fieldId)
+  const url = settings.urlBase + 'api/v1/field/changeAssigned'
+  return {
+    type: "CHANGE_ASSIGNED_USER",
+    package: {
+      userId: userId,
+      fieldId: fieldId
+    },
+    payload: axios.post(url, {
+      fieldId: fieldId,
+      userId: userId
+    },)
+  }
+
+}

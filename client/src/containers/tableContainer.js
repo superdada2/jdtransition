@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import {fetchFields, fetchFieldComments} from '../actions/fieldActions'
+import {fetchFields, fetchFieldComments, changeAssigned} from '../actions/fieldActions'
 import {fetchTableComments, saveComment} from '../actions/tableActions'
 import {
   Table,
@@ -15,6 +15,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import _ from 'lodash'
 import CommentsComponent from '../components/comments'
 import {nav} from '../actions/navigate'
+import UserDropdown from '../components/userDropdown'
 
 class TableContainer extends Component {
   constructor(props) {
@@ -100,9 +101,19 @@ class TableContainer extends Component {
 
               <TableRowColumn>{i.name}</TableRowColumn>
               <TableRowColumn>{i.oracleStatusEnum.data}</TableRowColumn>
-              <TableRowColumn>{i.assignedTo
-                  ? null
-                  : null}</TableRowColumn>
+              <TableRowColumn>{< UserDropdown defaultUser = {
+                  i.assignedTo
+                }
+                users = {
+                  this.props.ui.users
+                }
+                onChange = {
+                  (value) => {
+                    this
+                      .props
+                      .changeAssigned(value, i.id)
+                  }
+                } />}</TableRowColumn>
               <TableRowColumn>{i
                   .translations
                   .find(j => {
@@ -146,13 +157,14 @@ class TableContainer extends Component {
   }
 }
 function mapStateToProsp(state) {
-  return {field: state.field, tables: state.table, tableComments: state.table.comments, commentsState: state.table.commentsState};
+  return {ui: state.ui, field: state.field, tables: state.table, tableComments: state.table.comments, commentsState: state.table.commentsState};
 }
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
     fetchFields: fetchFields,
     fetchTableComments: fetchTableComments,
-    saveTableComment: saveComment
+    saveTableComment: saveComment,
+    changeAssigned: changeAssigned
   }, dispatch);
 }
 

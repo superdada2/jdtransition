@@ -1,3 +1,4 @@
+import _ from 'lodash'
 const initialState = {
   tableId: 0,
   fields: [],
@@ -28,6 +29,17 @@ export const fieldReducer = (state = initialState, action) => {
       return newState;
     case "FETCH_FIELD_FULFILLED":
       newState.field = action.payload.data;
+      return newState;
+    case "CHANGE_ASSIGNED_USER_PENDING":
+
+      return newState;
+    case "CHANGE_ASSIGNED_USER_FULFILLED":
+      const id = action.payload.data.fieldId
+      // console.log(action.payload.data); console.log(newState.fields);
+      const index = _.findIndex(newState.fields, (i) => {
+        return i.id == id
+      });
+      newState.fields[index].assignedTo = action.payload.data.userId
       return newState;
     default:
       return state

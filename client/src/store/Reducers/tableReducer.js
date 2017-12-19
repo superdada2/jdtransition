@@ -1,3 +1,5 @@
+import _ from 'lodash'
+
 const initialState = {
   tableNameState: false,
   tableNames: [],
@@ -39,6 +41,14 @@ export const tableReducer = (state = initialState, action) => {
       return newState;
     case "SAVE_TABLE_COMMENT_FULFILLED":
       newState.saveCommentState = true;
+      return newState;
+    case "CHANGED_ASSIGNED_USER_FULFILLED":
+      var id = action.payload.data.tableId
+      const index = _.findIndex(newState.tableNames, (i) => {
+        return i.id == id
+      });
+      newState.tableNames[index].assignedTo = action.payload.data.userId
+      // newState.tableNames = action.payload.data
       return newState;
     default:
       return state
