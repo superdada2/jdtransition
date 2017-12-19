@@ -100,7 +100,7 @@ class TableContainer extends Component {
             <TableRow key={i.id}>
 
               <TableRowColumn>{i.name}</TableRowColumn>
-              <TableRowColumn>{i.oracleStatusEnum.data}</TableRowColumn>
+              <TableRowColumn>{i.jdeStatusEnum.data}</TableRowColumn>
               <TableRowColumn>{< UserDropdown defaultUser = {
                   i.assignedTo
                 }

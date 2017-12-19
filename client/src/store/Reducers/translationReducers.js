@@ -1,3 +1,4 @@
+import _ from 'lodash'
 const initialState = {
 
   commentsState: false,
@@ -31,6 +32,14 @@ export const translationReducer = (state = initialState, action) => {
       return newState;
     case "SAVE_TRANSLATION_COMMENT_FULFILLED":
       newState.saveCommentState = true;
+      return newState;
+    case "CHANGE_STATUS_FULFILLED":
+      var id = action.payload.data.translationId
+      const index = _.findIndex(newState.translations, (i) => {
+        return i.id == id
+      });
+      newState.translations[index].status = action.payload.data.status
+      // newState.tableNames = action.payload.data
       return newState;
     default:
       return state

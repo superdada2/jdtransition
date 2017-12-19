@@ -2,7 +2,8 @@ const initialState = {
   sideBarVisibility: false,
   user: 1,
   database: 1,
-  users: []
+  users: [],
+  statusEnum: []
 }
 
 export const uiReducer = (state = initialState, action) => {
@@ -19,7 +20,9 @@ export const uiReducer = (state = initialState, action) => {
     case "GET_USERS_FULFILLED":
       newState.users = action.payload.data
       return newState;
-
+    case "GET_STATUS_ENUM_FULFILLED":
+      newState.statusEnum = action.payload.data
+      return newState;
     default:
       return newState;
 

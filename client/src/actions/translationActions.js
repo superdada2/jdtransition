@@ -46,3 +46,15 @@ export function saveTranslation(value = "", fieldId = 0) {
     payload: axios.post(url, translation)
   }
 }
+
+export function changeStatus(fieldId = 0, translationId = 0, status = 0) {
+  const url = settings.urlBase + 'api/v1/translation/changeStatus'
+  return {
+    type: "CHANGE_STATUS",
+    payload: axios.post(url, {
+      translationId: translationId,
+      fieldId: fieldId,
+      status: status
+    },)
+  }
+}

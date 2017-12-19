@@ -9,6 +9,7 @@ import {
 } from 'material-ui/Table';
 import RaisedButton from 'material-ui/RaisedButton';
 import CommentComponent from './comments'
+import StatusDropdown from './statusDropdown'
 // required props, translation, saveComment(saveANDrefresh),
 // fetchComments(refreshAllComments),
 export default class Translation extends Component {
@@ -43,7 +44,15 @@ export default class Translation extends Component {
           <TableBody displayRowCheckbox={false}>
             <TableRow>
               <TableRowColumn>{this.props.translation.value}</TableRowColumn>
-              <TableRowColumn>{this.props.translation.statusEnum.data}</TableRowColumn>
+              <TableRowColumn><StatusDropdown
+                defaultStatus={this.props.translation.status}
+                onChange={(value) => this.props.changeStatus(this.props.translation.id, value)}
+                statusEnum={this
+        .props
+        .statusEnum
+        .filter(i => {
+          return i.data == 'proposed' || i.data == 'confirmed' || i.data == 'rejected'
+        })}/></TableRowColumn>
               <TableRowColumn>{this.props.translation.user.username}</TableRowColumn>
               <TableRowColumn>{this.props.translation.timestamp}</TableRowColumn>
             </TableRow>

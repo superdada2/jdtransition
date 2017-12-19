@@ -3,7 +3,7 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {toggleSidebar} from '../actions/uiActions'
-import {getUserList} from '../actions/uiActions'
+import {getUserList, getStatusEnum} from '../actions/uiActions'
 
 class AppBarUI extends Component {
   constructor(props) {
@@ -19,6 +19,12 @@ class AppBarUI extends Component {
       this
         .props
         .getUserList()
+    }
+    if (this.props.ui.statusEnum.length === 0) {
+
+      this
+        .props
+        .getStatusEnum()
     }
   }
 
@@ -36,7 +42,8 @@ function mapStateToProsp(state) {
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
     toggleSidebar: toggleSidebar,
-    getUserList: getUserList
+    getUserList: getUserList,
+    getStatusEnum: getStatusEnum
   }, dispatch);
 }
 

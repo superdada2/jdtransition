@@ -12,3 +12,11 @@ export function getUserList() {
     payload: axios.get(url)
   }
 }
+
+export function getStatusEnum() {
+  const url = settings.urlBase + 'api/v1/system/getStatusEnum'
+  return {
+    type: "GET_STATUS_ENUM",
+    payload: axios.get(url)
+  }
+}

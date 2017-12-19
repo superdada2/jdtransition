@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import {fetchTranslations, fetchTranslationComments, saveComment, saveTranslation} from '../actions/translationActions'
+import {fetchTranslations, fetchTranslationComments, saveComment, saveTranslation, changeStatus} from '../actions/translationActions'
 import CommentsComponent from '../components/comments'
 import {fetchFieldById} from '../actions/fieldActions';
 import TranslationComponent from '../components/translation'
@@ -79,7 +79,13 @@ class FieldContainer extends Component {
             translation={i}
             saveComment={this.saveComments}
             addTranslation={this.props.addTranslation}
-            users={this.props.users}/>)
+            users={this.props.users}
+            statusEnum={this.props.statusEnum}
+            changeStatus={(translationId, status) => {
+            this
+              .props
+              .changeStatus(this.props.match.params.id, translationId, status)
+          }}/>)
         })
     }
 
@@ -92,14 +98,15 @@ class FieldContainer extends Component {
   }
 }
 function mapStateToProsp(state) {
-  return {field: state.field, translation: state.translation, users: state.ui.users};
+  return {field: state.field, translation: state.translation, users: state.ui.users, statusEnum: state.ui.statusEnum};
 }
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
     fetchTranslations: fetchTranslations,
     fetchFieldById: fetchFieldById,
     saveTranslationComment: saveComment,
-    addTranslation: saveTranslation
+    addTranslation: saveTranslation,
+    changeStatus: changeStatus
   }, dispatch);
 }
 

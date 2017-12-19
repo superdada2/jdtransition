@@ -10,6 +10,7 @@ import {
   dbTypeEnum,
   assignedTo
 } from '../../../models'
+import {updateField} from '../../../utilities'
 
 export function addTranslation({
   fieldId = 0,
@@ -89,22 +90,22 @@ export function getSourceTables({
 
 export function changeStatus({
   translationId = 0,
-  status = 0
+  status = 0,
+  fieldId = 0
 }) {
   return new Promise((res, rej) => {
     translation.update({
       status: status
     }, {
-        where: {
-          id: translationId
-        }
-      })
-      .then(i => {
-      if (status ===) 
+      where: {
+        id: translationId
       }
-    )
-      .catch(err => {
-        rej(err)
-      })
+    }).catch(err => {
+      rej(err)
+    }).then(async i => {
+
+      updateField(fieldId, 1)
+      res({translationId: translationId, fieldId: fieldId, status: status})
+    })
   })
 }
