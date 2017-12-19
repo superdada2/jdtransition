@@ -97,26 +97,35 @@ function createTranslation(row, fieldId) {
 export async function initiate() {
   const status = [
     {
+      id: 1,
       data: 'empty'
     }, {
+      id: 2,
       data: 'populated'
     }, {
+      id: 3,
       data: 'confirmed'
     }, {
+      id: 4,
       data: 'complete'
     }, {
+      id: 5,
       data: 'proposed'
     }, {
+      id: 6,
       data: 'rejected'
     }, {
+      id: 7,
       data: 'partial'
     }
   ]
 
   const dbType = [
     {
+      id: 1,
       data: 'JDE'
     }, {
+      id: 2,
       data: 'Oracle'
     }
   ]

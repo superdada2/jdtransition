@@ -5,15 +5,12 @@ module.exports = function (sequelize, DataTypes) {
     id: {
       type: DataTypes.INTEGER(11),
       allowNull: false,
-      primaryKey: true,
-      autoIncrement: true
+      primaryKey: true
     },
     data: {
       type: DataTypes.STRING(255),
       allowNull: false,
       unique: true
-    },
-  }, {
-    tableName: 'statusEnum'
-  });
+    }
+  }, {tableName: 'statusEnum'});
 };
