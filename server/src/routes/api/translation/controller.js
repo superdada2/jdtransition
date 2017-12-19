@@ -9,6 +9,23 @@ import {
   assignedTo
 } from '../../../models'
 
+export function addTranslation({
+  fieldId = 0,
+  value = "",
+  status = 1,
+  assignedTo = 1,
+  dbType = 1,
+  translationType = 1
+}) {
+  translation.create({
+    fieldId: fieldId,
+    value: value,
+    status: status,
+    assignedTo: assignedTo,
+    dbType: dbType,
+    translationType: translationType
+  })
+}
 export function getTranslationByFieldId({
   fieldId = 0
 }) {
@@ -32,6 +49,9 @@ export function getTranslationByFieldId({
       }, {
         model: statusEnum
       }
+    ],
+    order: [
+      ['id', 'DESC']
     ]
   })
 }

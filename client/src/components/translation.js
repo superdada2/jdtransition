@@ -7,8 +7,9 @@ import {
   TableRow,
   TableRowColumn
 } from 'material-ui/Table';
+import RaisedButton from 'material-ui/RaisedButton';
 import CommentComponent from './comments'
-// required props, translation, saveComment(saveANDrefresh), addTranslation,
+// required props, translation, saveComment(saveANDrefresh),
 // fetchComments(refreshAllComments),
 export default class Translation extends Component {
   constructor(props) {
@@ -16,6 +17,7 @@ export default class Translation extends Component {
     this.saveComment = this
       .saveComment
       .bind(this)
+
   }
 
   saveComment({
@@ -30,6 +32,7 @@ export default class Translation extends Component {
   render() {
     return (
       <div>
+
         <Table>
           <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
             < TableHeaderColumn>Value</TableHeaderColumn>

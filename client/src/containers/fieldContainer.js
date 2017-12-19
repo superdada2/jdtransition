@@ -1,11 +1,12 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import {fetchTranslations, fetchTranslationComments, saveComment} from '../actions/translationActions'
+import {fetchTranslations, fetchTranslationComments, saveComment, saveTranslation} from '../actions/translationActions'
 import CommentsComponent from '../components/comments'
 import {fetchFieldById} from '../actions/fieldActions';
 import TranslationComponent from '../components/translation'
 import _ from 'lodash'
+import AddTranslationDialog from '../components/addTranslationDialog'
 
 class FieldContainer extends Component {
   constructor(props) {
@@ -13,7 +14,9 @@ class FieldContainer extends Component {
     this.saveComments = this
       .saveComments
       .bind(this)
-    this.fet
+    this.addTranslation = this
+      .addTranslation
+      .bind(this)
   }
   componentDidMount() {
     this
@@ -32,6 +35,17 @@ class FieldContainer extends Component {
         .props
         .fetchTranslations(this.props.match.params.id)
     }
+  }
+  addTranslation(value) {
+    this
+      .props
+      .addTranslation(value, this.props.match.params.id)
+      .then(i => {
+        this
+          .props
+          .fetchTranslations(this.props.match.params.id)
+      })
+
   }
 
   saveComments(comment) {
@@ -63,14 +77,15 @@ class FieldContainer extends Component {
           return (<TranslationComponent
             key={i.id}
             translation={i}
-            saveComment={this.saveComments}/>)
+            saveComment={this.saveComments}
+            addTranslation={this.props.addTranslation}/>)
         })
     }
 
     return (
       <div>
         <h3>{title}</h3>
-        {translations}
+        <AddTranslationDialog addTranslation={this.addTranslation}/> {translations}
       </div>
     )
   }
@@ -82,7 +97,8 @@ function mapDispatchToProps(dispatch) {
   return bindActionCreators({
     fetchTranslations: fetchTranslations,
     fetchFieldById: fetchFieldById,
-    saveTranslationComment: saveComment
+    saveTranslationComment: saveComment,
+    addTranslation: saveTranslation
   }, dispatch);
 }
 

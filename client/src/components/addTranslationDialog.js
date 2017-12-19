@@ -5,11 +5,20 @@ import React, {Component} from 'react'
 import TextField from 'material-ui/TextField';
 import _, {debounce} from 'lodash';
 
-//required props are saveTranslation, fieldId, closeDialog
-export default class CommentDialog extends Component {
+//required props are addTranslation,
+export default class AddTranslationDialogComponent extends Component {
   constructor(props) {
     super(props)
-
+    this.state = {
+      translation: "",
+      dialogVisibility: false
+    }
+    this.setTranslation = this
+      .setTranslation
+      .bind(this)
+  }
+  setTranslation(e, value) {
+    this.setState({translation: value})
   }
   render() {
     const actions = [ < FlatButton label = "Cancel" onClick = {
@@ -18,30 +27,33 @@ export default class CommentDialog extends Component {
         () => {
           this
             .props
-            .saveComment(this.state.title, this.state.comment),
-          this
-            .props
-            .closeDialog()
+            .addTranslation(this.state.translation),
+          this.setState({dialogVisibility: false})
+
         }
       } />
     ]
 
     return (
-      <Dialog
-        title={this.props.isReply
-        ? "Reply"
-        : "New Comment"}
-        actions={actions}
-        open={this.props.dialogVisibility}>
-        {titleInput}
-        <br/>
-        <TextField
-          floatingLabelText="Comment"
-          onChange={this.setComment}
-          multiLine={true}
-          rows={5}/>
+      <div>
+        <RaisedButton
+          primary={true}
+          onClick={() => this.setState({dialogVisibility: true})}
+          label="Add Translation"/>
+        <Dialog
+          title={"New Translation"}
+          actions={actions}
+          open={this.state.dialogVisibility}>
 
-      </Dialog>
+          <br/>
+          <TextField
+            floatingLabelText="Translation"
+            onChange={this.setTranslation}
+            multiLine={true}
+            rows={5}/>
+
+        </Dialog>
+      </div>
     )
   }
 }

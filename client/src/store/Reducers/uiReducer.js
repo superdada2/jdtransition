@@ -1,5 +1,7 @@
 const initialState = {
-  sideBarVisibility: false
+  sideBarVisibility: false,
+  user: 1,
+  database: 1
 }
 
 export const uiReducer = (state = initialState, action) => {
