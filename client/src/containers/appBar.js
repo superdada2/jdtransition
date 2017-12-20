@@ -3,7 +3,8 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {toggleSidebar} from '../actions/uiActions'
-import {getUserList, getStatusEnum} from '../actions/uiActions'
+import {getUserList, getStatusEnum, setUser} from '../actions/uiActions'
+import Login from '../components/login'
 
 class AppBarUI extends Component {
   constructor(props) {
@@ -29,10 +30,20 @@ class AppBarUI extends Component {
   }
 
   render() {
-    return (<AppBar
-      title="Data Warhouse"
-      iconClassNameRight="muidocs-icon-navigation-expand-more"
-      onLeftIconButtonClick={this.props.toggleSidebar}/>)
+    return (
+      <AppBar
+        title="Data Warhouse"
+        onLeftIconButtonClick={this.props.toggleSidebar}
+        iconElementRight={< Login userList = {
+        this.props.ui.users
+      }
+      setUser = {
+        this.props.setUser
+      }
+      user = {
+        this.props.ui.user
+      } />}/>
+    )
   }
 }
 function mapStateToProsp(state) {
@@ -43,7 +54,8 @@ function mapDispatchToProps(dispatch) {
   return bindActionCreators({
     toggleSidebar: toggleSidebar,
     getUserList: getUserList,
-    getStatusEnum: getStatusEnum
+    getStatusEnum: getStatusEnum,
+    setUser: setUser
   }, dispatch);
 }
 

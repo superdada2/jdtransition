@@ -59,7 +59,7 @@ class TableContainer extends Component {
   }) {
     this
       .props
-      .saveTableComment({title: title, tableId: this.props.match.params.id, comment: comment, userId: 1, replyId: replyId})
+      .saveTableComment({title: title, tableId: this.props.match.params.id, comment: comment, userId: this.props.ui.user.id, replyId: replyId})
       .then(i => {
         this.fetchComments(this.props.match.params.id)
       })

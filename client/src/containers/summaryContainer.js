@@ -10,7 +10,7 @@ import {
   TableRow,
   TableRowColumn
 } from 'material-ui/Table';
-
+import {nav} from '../actions/navigate'
 import UserDropdown from '../components/userDropdown'
 
 class Summary extends Component {
@@ -19,10 +19,18 @@ class Summary extends Component {
     this.state = {
       open: true
     }
+    this.onCellClick = this
+      .onCellClick
+      .bind(this)
   }
   componentDidMount() {
-    if (!this.props.tableStatus) 
-      this.props.fetchTables()
+
+    this
+      .props
+      .fetchTables()
+  }
+  onCellClick(row, column) {
+    nav('/table/' + this.props.tables[row].id)
   }
   render() {
     let summaryTable = null
@@ -57,7 +65,7 @@ class Summary extends Component {
     return (
       <div>
         <h3>Summary</h3>
-        <Table>
+        <Table onCellClick={this.onCellClick}>
           <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
 
             <TableRow>

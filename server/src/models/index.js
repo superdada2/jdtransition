@@ -43,6 +43,10 @@ db
     foreignKey: 'tableId',
     onDelete: 'cascade'
   })
+
+db
+  .field
+  .belongsTo(db.table, {foreignKey: 'tableId'})
 db
   .field
   .hasMany(db.translation, {

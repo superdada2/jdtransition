@@ -3,7 +3,7 @@ import tableRouter from './table'
 import fieldRouter from './field'
 import translationRouter from './translation'
 import sysRouter from './system'
-import {loadData} from './initiate'
+import {loadData, updateTable} from './initiate'
 
 export const router = express.Router();
 
@@ -19,7 +19,13 @@ router.get('/load', async(req, res) => {
     .status(500)
     .json('test')
 })
+router.get('/updateTable', async(req, res) => {
 
+  updateTable()
+  res
+    .status(500)
+    .json('test')
+})
 export default router;
 
 // router.post('/getHistory', (req, res, next) => {   Authorize(req, res, next,

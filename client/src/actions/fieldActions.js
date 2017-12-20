@@ -27,6 +27,14 @@ export function fetchFieldById(fieldId = 0) {
   }
 }
 
+export function fetchFieldByUser(userId = 0) {
+  const url = settings.urlBase + 'api/v1/field/getFieldByUser'
+  return {
+    type: "FETCH_FIELD_USER",
+    payload: axios.post(url, {userId: userId})
+  }
+}
+
 export function changeAssigned(userId = 0, fieldId = 1) {
   console.log("changing assigned", userId, fieldId)
   const url = settings.urlBase + 'api/v1/field/changeAssigned'

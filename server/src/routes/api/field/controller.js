@@ -5,10 +5,45 @@ import {
   user,
   statusEnum,
   tableComment,
-  fieldComment
+  fieldComment,
+  table
 } from '../../../models'
 import Promise from 'bluebird'
 
+export function getFieldByUser({
+  userId = 0
+}) {
+  return field.findAll({
+    where: {
+      assignedTo: userId
+    },
+    include: [
+      {
+
+        model: statusEnum,
+        as: 'jdeStatusEnum'
+      }, {
+
+        model: statusEnum,
+        as: 'oracleStatusEnum'
+      }, {
+        model: table
+      }, {
+        model: user
+      }, {
+        model: translation,
+        order: [
+          ['timestamp', 'DESC']
+        ],
+        include: [
+          {
+            model: user
+          }
+        ]
+      }
+    ]
+  })
+}
 export function getFieldById({
   fieldId = 0
 }) {

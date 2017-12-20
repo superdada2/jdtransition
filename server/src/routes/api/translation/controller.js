@@ -23,7 +23,7 @@ export function addTranslation({
   translation.create({
     fieldId: fieldId,
     value: value,
-    status: status,
+    status: 5,
     assignedTo: assignedTo,
     dbType: dbType,
     translationType: translationType

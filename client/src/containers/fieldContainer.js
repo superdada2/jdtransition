@@ -80,6 +80,7 @@ class FieldContainer extends Component {
             saveComment={this.saveComments}
             addTranslation={this.props.addTranslation}
             users={this.props.users}
+            user={this.props.user}
             statusEnum={this.props.statusEnum}
             changeStatus={(translationId, status) => {
             this
@@ -98,7 +99,7 @@ class FieldContainer extends Component {
   }
 }
 function mapStateToProsp(state) {
-  return {field: state.field, translation: state.translation, users: state.ui.users, statusEnum: state.ui.statusEnum};
+  return {field: state.field, user: state.ui.user, translation: state.translation, users: state.ui.users, statusEnum: state.ui.statusEnum};
 }
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({

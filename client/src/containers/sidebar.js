@@ -39,8 +39,18 @@ class Sidebar extends Component {
               {i.name}</MenuItem>
           )
         })
-      menuItems.push(
+      menuItems.unshift(
         <MenuItem key={0} onClick={this.props.toggleSideBar}>Close</MenuItem>
+      )
+      menuItems.unshift(
+        <MenuItem
+          key={-2}
+          onClick={() => {
+          nav('/task'),
+          this
+            .props
+            .toggleSideBar()
+        }}>Task</MenuItem>
       )
 
       menuItems.unshift(

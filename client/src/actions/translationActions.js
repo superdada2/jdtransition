@@ -37,7 +37,7 @@ export function saveTranslation(value = "", fieldId = 0) {
     fieldId: fieldId,
     value: value,
     status: 1,
-    assignedTo: state.user,
+    assignedTo: state.user.id,
     dbType: state.database,
     translationType: 1
   }

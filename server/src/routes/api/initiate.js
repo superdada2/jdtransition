@@ -10,7 +10,18 @@ import {
   sourceTable
 } from '../../models'
 
+import {updateTableStatus} from '../../utilities'
+
 import logger from '../../logger'
+
+export async function updateTable() {
+  var tables = await table.findAll()
+
+  tables = tables.map(i => i.dataValues)
+  tables.forEach(t => {
+    updateTableStatus(t.id, 1)
+  })
+}
 
 export function loadData() {
   convertExcel.processFile('C:/Users/admin/data.xlsx', null, {
@@ -46,10 +57,10 @@ export function loadData() {
                   field.create({
                     tableId: tableId,
                     name: j['Column Names in Datawarehouse'],
-                    jdeStatus: (_.has(j, 'Oracle Column Mapping') || _.has(j, 'Where Clause/Lookup Codes'))
+                    oracleStatus: (_.has(j, 'Oracle Column Mapping') || _.has(j, 'Where Clause/Lookup Codes'))
                       ? 2
                       : 1,
-                    oracleStatus: (_.has(j, 'JD Edwards Column Names') || _.has(j, 'JD Edwards Where Clause/Subquery/Lookup codes'))
+                    jdeStatus: (_.has(j, 'JD Edwards Column Names') || _.has(j, 'JD Edwards Where Clause/Subquery/Lookup codes'))
                       ? 2
                       : 1
                   }).catch(err => {
@@ -73,22 +84,22 @@ export function loadData() {
 
 function createTranslation(row, fieldId) {
   if (_.has(row, 'Oracle Column Mapping')) {
-    translation.create({fieldId: fieldId, value: row['Oracle Column Mapping'], status: 2, dbType: 2, translationType: 1}).catch(err => {
+    translation.create({fieldId: fieldId, value: row['Oracle Column Mapping'], status: 5, dbType: 2, translationType: 1}).catch(err => {
       logger.error({err: err, value: row['Oracle Column Mapping']})
     })
   }
   if (_.has(row, 'Where Clause/Lookup Codes')) {
-    translation.create({fieldId: fieldId, value: row['Where Clause/Lookup Codes'], status: 2, dbType: 2, translationType: 2}).catch(err => {
+    translation.create({fieldId: fieldId, value: row['Where Clause/Lookup Codes'], status: 5, dbType: 2, translationType: 2}).catch(err => {
       logger.error({err: err, value: row['Where Clause/Lookup Codes']})
     })
   }
   if (_.has(row, 'JD Edwards Column Names')) {
-    translation.create({fieldId: fieldId, value: row['JD Edwards Column Names'], status: 2, dbType: 1, translationType: 1}).catch(err => {
+    translation.create({fieldId: fieldId, value: row['JD Edwards Column Names'], status: 5, dbType: 1, translationType: 1}).catch(err => {
       logger.error({err: err, value: row['JD Edwards Column Names']})
     })
   }
   if (_.has(row, 'JD Edwards Where Clause/Subquery/Lookup codes')) {
-    translation.create({fieldId: fieldId, value: row['JD Edwards Where Clause/Subquery/Lookup codes'], status: 2, dbType: 1, translationType: 2}).catch(err => {
+    translation.create({fieldId: fieldId, value: row['JD Edwards Where Clause/Subquery/Lookup codes'], status: 5, dbType: 1, translationType: 2}).catch(err => {
       logger.error({err: err, value: row['JD Edwards Where Clause/Subquery/Lookup codes']})
     })
   }

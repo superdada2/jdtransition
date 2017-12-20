@@ -10,7 +10,7 @@ import {
 import RaisedButton from 'material-ui/RaisedButton';
 import CommentComponent from './comments'
 import StatusDropdown from './statusDropdown'
-// required props, translation, saveComment(saveANDrefresh),
+// required props, translation, saveComment(saveANDrefresh), user
 // fetchComments(refreshAllComments),
 export default class Translation extends Component {
   constructor(props) {
@@ -28,7 +28,7 @@ export default class Translation extends Component {
   }) {
     this
       .props
-      .saveComment({title: title, translationId: this.props.translation.id, comment: comment, userId: 1, replyId: replyId})
+      .saveComment({title: title, translationId: this.props.translation.id, comment: comment, userId: this.props.user.id, replyId: replyId})
   }
   render() {
     return (
@@ -38,7 +38,7 @@ export default class Translation extends Component {
           <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
             < TableHeaderColumn>Value</TableHeaderColumn>
             <TableHeaderColumn>Status</TableHeaderColumn>
-            <TableHeaderColumn>AssignedTo</TableHeaderColumn>
+            <TableHeaderColumn>Created By</TableHeaderColumn>
             <TableHeaderColumn>Time Stamp</TableHeaderColumn>
           </TableHeader>
           <TableBody displayRowCheckbox={false}>
@@ -53,7 +53,9 @@ export default class Translation extends Component {
         .filter(i => {
           return i.data == 'proposed' || i.data == 'confirmed' || i.data == 'rejected'
         })}/></TableRowColumn>
-              <TableRowColumn>{this.props.translation.user.username}</TableRowColumn>
+              <TableRowColumn>{this.props.translation.user
+                  ? this.props.translation.user.username
+                  : 'unassigned'}</TableRowColumn>
               <TableRowColumn>{this.props.translation.timestamp}</TableRowColumn>
             </TableRow>
           </TableBody>

@@ -4,7 +4,7 @@ import {
 
   user,
   statusEnum,
-
+  table,
   dbTypeEnum,
   assignedTo
 } from './models'
@@ -30,9 +30,8 @@ export async function updateField(fieldId = 0, dbType = 1) {
     .filter(j => {
       return j.dbType == dbType
     })
-  console.log(_.findIndex(translations, i => {
-    return i.status == 3
-  }) != -1)
+  console.log(fieldId, dbType)
+
   //check if there is complete ones
   if (_.findIndex(translations, i => {
     return i.status == 3
@@ -58,5 +57,80 @@ export async function updateField(fieldId = 0, dbType = 1) {
         break;
     }
 
+  } else {
+    switch (dbType) {
+      case 1:
+        await field.update({
+          jdeStatus: 2
+        }, {
+          where: {
+            id: fieldId
+          }
+        });
+        break;
+      case 2:
+        await field.update({
+          oracleStatus: 2
+        }, {
+          where: {
+            id: fieldId
+          }
+        });
+        break;
+    }
   }
+
+  var temp = await field
+    .findOne({
+    where: {
+      id: fieldId
+    }
+  })
+    .then(i => {
+      updateTableStatus(i.dataValues.tableId, dbType)
+    })
+
+}
+
+export function updateTableStatus(tableId, dbType) {
+  var thisTable = table.findOne({
+    where: {
+      id: tableId
+    },
+    include: [
+      {
+        model: field
+      }
+    ]
+  }).then(i => {
+    // console.log(i.dataValues)
+    var fields = i
+      .dataValues
+      .fields
+      .map(i => i.dataValues)
+      .filter(j => j.dbType = dbType)
+
+    //checkif complete
+    console.log(fields, fields.filter(i => i.jdeStatus == 4).length)
+    if (fields.filter(i => i.jdeStatus == 4).length == fields.length) {
+      table.update({
+        status: 4
+      }, {
+        where: {
+          id: tableId
+        }
+      })
+    }
+    //check if in progress
+    if (fields.filter(i => i.jdeStatus == 4).length > 0 || fields.filter(i => i.jdeStatus == 2).length > 0) {
+      table.update({
+        status: 7
+      }, {
+        where: {
+          id: tableId
+        }
+      })
+    }
+  })
+
 }

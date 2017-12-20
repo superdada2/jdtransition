@@ -5,7 +5,8 @@ const initialState = {
   fieldState: false,
   commentsState: false,
   comments: [],
-  field: {}
+  field: {},
+  userField: []
 }
 
 export const fieldReducer = (state = initialState, action) => {
@@ -41,6 +42,10 @@ export const fieldReducer = (state = initialState, action) => {
       });
       newState.fields[index].assignedTo = action.payload.data.userId
       return newState;
+    case "FETCH_FIELD_USER_FULFILLED":
+      newState.userField = action.payload.data
+      return newState
+      break;
     default:
       return state
   }
