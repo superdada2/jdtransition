@@ -22,7 +22,7 @@ export default class AddTranslationDialogComponent extends Component {
   }
   render() {
     const actions = [ < FlatButton label = "Cancel" onClick = {
-        this.props.closeDialog
+        () => this.setState({dialogVisibility: false})
       } />, < FlatButton label = "Save" onClick = {
         () => {
           this

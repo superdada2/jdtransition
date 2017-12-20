@@ -10,6 +10,7 @@ import {
 import RaisedButton from 'material-ui/RaisedButton';
 import CommentComponent from './comments'
 import StatusDropdown from './statusDropdown'
+import moment from 'moment'
 // required props, translation, saveComment(saveANDrefresh), user
 // fetchComments(refreshAllComments),
 export default class Translation extends Component {
@@ -56,7 +57,7 @@ export default class Translation extends Component {
               <TableRowColumn>{this.props.translation.user
                   ? this.props.translation.user.username
                   : 'unassigned'}</TableRowColumn>
-              <TableRowColumn>{this.props.translation.timestamp}</TableRowColumn>
+              <TableRowColumn>{moment(this.props.translation.timestamp).format("YYYY-MM-DD HH:mm:ss")}</TableRowColumn>
             </TableRow>
           </TableBody>
         </Table>

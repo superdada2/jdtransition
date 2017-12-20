@@ -5,6 +5,7 @@ import FlatButton from 'material-ui/FlatButton';
 import RaisedButton from 'material-ui/RaisedButton';
 import Dialog from 'material-ui/Dialog';
 import CommentDialog from './commentDialog'
+import moment from 'moment'
 
 // required props are this.props.fetchComments this.props.comments,
 // this.props.saveComment
@@ -38,7 +39,8 @@ export default class CommentContainer extends Component {
     var childComments = children.map(j => {
       return (
         <Card key={j.id}>
-          <CardHeader subtitle={j.user.username + " at " + j.timestamp}/>
+          <CardHeader
+            subtitle={j.user.username + " at " + moment(j.timestamp).format("YYYY-MM-DD HH:mm:ss")}/>
           <CardText>
             {j.comment}
           </CardText>
@@ -50,7 +52,7 @@ export default class CommentContainer extends Component {
       <Card key={comment.id}>
         <CardHeader
           title={comment.title}
-          subtitle={comment.user.username + " at " + comment.timestamp}/>
+          subtitle={comment.user.username + " at " + moment(comment.timestamp).format("YYYY-MM-DD HH:mm:ss")}/>
 
         <CardText>
           {comment.comment}
