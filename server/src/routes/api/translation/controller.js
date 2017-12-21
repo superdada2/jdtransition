@@ -20,7 +20,9 @@ export function addTranslation({
   dbType = 1,
   translationType = 1
 }) {
-  translation.create({
+
+  translation
+    .create({
     fieldId: fieldId,
     value: value,
     status: 5,
@@ -28,6 +30,9 @@ export function addTranslation({
     dbType: dbType,
     translationType: translationType
   })
+    .then(i => {
+      updateField(fieldId, 1)
+    })
 }
 export function getTranslationByFieldId({
   fieldId = 0

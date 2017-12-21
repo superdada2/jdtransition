@@ -10,7 +10,11 @@ import Summary from './containers/summaryContainer'
 import Table from './containers/tableContainer'
 import Field from './containers/fieldContainer'
 import Task from './containers/taskViewContainer'
+import styled from 'styled-components'
 
+const AppWrapper = styled.div `
+  margin: 10px
+`;
 class App extends Component {
   componentDidMount() {
     injectTapEventPlugin()
@@ -22,13 +26,13 @@ class App extends Component {
 
           <SideBar/>
           <AppBar/>
-          <div>
+          <AppWrapper>
             <Route exact path="/" component={Summary}/>
             <Route exact path="/summary" component={Summary}/>
             <Route path="/task" component={Task}/>
             <Route path="/table/:id" component={Table}/>
             <Route path="/field/:id" component={Field}/>
-          </div>
+          </AppWrapper>
 
         </div>
       </MuiThemeProvider>

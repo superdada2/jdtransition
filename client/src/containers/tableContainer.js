@@ -35,7 +35,9 @@ class TableContainer extends Component {
       .props
       .fetchFields(this.props.match.params.id)
     this.fetchComments(this.props.match.params.id)
-
+    this.findTranslation = this
+      .findTranslation
+      .bind(this)
   }
 
   componentWillReceiveProps(newProp) {
@@ -69,6 +71,29 @@ class TableContainer extends Component {
     this
       .props
       .fetchTableComments(tableId)
+  }
+  findTranslation(translations) {
+    if (translations.find(j => {
+      return j.dbType == 1
+    }) != undefined) {
+      //check if have complete
+      console.log(translations)
+      var temp = translations.filter(i => {
+        return i.status == 3
+      })
+      if (temp.length == 0) {
+        return _.findLast(translations, (j) => {
+          return j.dbType == 1
+        }).value
+      } else {
+        return _.findLast(temp, (j) => {
+          return j.dbType == 1
+        }).value
+      }
+
+    } else {
+      return null
+    }
   }
 
   render() {
@@ -114,15 +139,7 @@ class TableContainer extends Component {
                       .changeAssigned(value, i.id)
                   }
                 } />}</TableRowColumn>
-              <TableRowColumn>{i
-                  .translations
-                  .find(j => {
-                    return j.dbType == 1
-                  }) != undefined
-                  ? _.findLast(i.translations, (j) => {
-                    return j.dbType == 1
-                  }).value
-                  : null
+              <TableRowColumn>{this.findTranslation(i.translations)
 }</TableRowColumn>
             </TableRow>
           )
